@@ -26,24 +26,65 @@ public class Anagram {
 		System.out.println(pass ? "test passed" : "test Failed");
 	}  
 
-	// Returns true if the two given strings are anagrams, false otherwise.
 	public static boolean isAnagram(String str1, String str2) {
-		// Replace the following statement with your code
-		return false;
+		String s1 = preProcess(str1);
+		String s2 = preProcess(str2);
+		if (s1.length()!= s2.length())
+			return false;
+		for (int i=0; i<s1.length(); i++)
+		{
+			char c= s1.charAt(i);
+			boolean found = false;
+			for (int j=0; j<s2.length(); j++)
+			{
+				if (s2.charAt(j) == c)
+				{
+					String newS2 = "";
+					for (int k=0; k< s2.length(); k++)
+					{
+						if (k!=j)
+						newS2 = newS2 + s2.charAt(k);
+					}
+					s2 = newS2;
+					found = true;
+					break;
+				}
+			}
+			if (found==false)
+				return false;
+		}
+		return true;
 	}
 	   
-	// Returns a preprocessed version of the given string: all the letter characters are converted
-	// to lower-case, and all the other characters are deleted, except for spaces, which are left
-	// as is. For example, the string "What? No way!" becomes "whatnoway"
 	public static String preProcess(String str) {
-		// Replace the following statement with your code
-		return "";
+		String result = "";
+		for (int i=0; i<str.length(); i++)
+		{
+			char c = str.charAt(i);
+			if (Character.isLetter(c))
+			result = result+ Character.toLowerCase(c);
+							
+		}
+	
+		return result;
 	} 
 	   
-	// Returns a random anagram of the given string. The random anagram consists of the same
-	// characters as the given string, re-arranged in a random order. 
 	public static String randomAnagram(String str) {
-		// Replace the following statement with your code
-		return "";
+		String remaining = str;
+		String result = "";
+		while (remaining.length()>0)
+		{
+			int index = (int) (Math.random()*remaining.length());
+			char c = remaining.charAt(index);
+			result = result+ c;
+			String newRemaining= "";
+			for (int i=0; i<remaining.length(); i++)
+			{
+				if (i!= index)
+				newRemaining = newRemaining + remaining.charAt(i);
+			}
+			remaining = newRemaining;
+		}
+		return result;
 	}
 }
